@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -47,17 +50,48 @@ public class LoginActivity extends AppCompatActivity {
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 if (mLoginUsername.getText().toString().length()==0 ||
+
+                if (mLoginUsername.getText().toString().length()==0 ||
                             mLoginPassword.getText().toString().length()==0) {
-                        Toast.makeText(LoginActivity.this, "نام کاربری و رمز عبور را کامل وارد کنید",
-                                Toast.LENGTH_LONG).show();
+
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar.make(parentLayout, "نام کاربری و رمز عبور را کامل وارد کنید", Snackbar.LENGTH_LONG)
+                            .setAction("CLOSE", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                            .show();
+
                 } else if (mSignedUpUserName == null || mSignedUpPassWord == null){
-                    Toast.makeText(LoginActivity.this, "نام کاربری و رمز عبور شما به ثبت نرسیده است",
-                            Toast.LENGTH_LONG).show();
+
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar.make(parentLayout, "نام کاربری و رمز عبور شما به ثبت نرسیده است", Snackbar.LENGTH_LONG)
+                            .setAction("CLOSE", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                            .show();
+
                 }else if (mSignedUpUserName.equals(mLoginUsername.getText().toString()) &&
                         mSignedUpPassWord.equals(mLoginPassword.getText().toString()) ){
-                    Toast.makeText(LoginActivity.this, "نام کاربری و رمز عبور شما صحیح است" ,
-                            Toast.LENGTH_LONG).show();
+
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar.make(parentLayout, "نام کاربری و رمز عبور شما صحیح است", Snackbar.LENGTH_LONG)
+                            .setAction("CLOSE", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setActionTextColor(getResources().getColor(android.R.color.holo_green_light ))
+                            .show();
+
                 }
             }
         });
