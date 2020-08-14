@@ -27,6 +27,10 @@ public class SignupActivity extends AppCompatActivity {
 
         findView();
         setListeners();
+        if (savedInstanceState!=null) {
+            mUserNameSignup.setText(savedInstanceState.getString(BUNDLE_USER_SIGNUP));
+            mPasswordSignup.setText(savedInstanceState.getString(BUNDLE_PASSWORD_SIGNUP));
+        }
 
         Intent intent = getIntent();
         String name = intent.getStringExtra(LoginActivity.EXTRA_USER_NAME);

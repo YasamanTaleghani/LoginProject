@@ -35,14 +35,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (savedInstanceState!=null) {
-            Toast.makeText(this,"notNuluu",Toast.LENGTH_LONG);
-            mSignedUpUserName = savedInstanceState.getString(BUNDLE_M_SIGNED_UP_PASS_WORD);
-            mSignedUpPassWord = savedInstanceState.getString(BUNDLE_M_SIGNED_UP_PASS_WORD);
-        }
-
         findView();
         setListeners();
+
+        if (savedInstanceState!=null) {
+            mSignedUpUserName = savedInstanceState.getString(BUNDLE_M_SIGNED_UP_USER_NAME);
+            mSignedUpPassWord = savedInstanceState.getString(BUNDLE_M_SIGNED_UP_PASS_WORD);
+            mLoginUsername.setText(savedInstanceState.getString(BUNDLE_USER_NAME));
+            mLoginPassword.setText(savedInstanceState.getString(BUNDLE_PASSWORD));
+        }
 
     }
 
@@ -137,15 +138,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        outState.putString(BUNDLE_USER_NAME,mLoginUsername.getText().toString());
-        outState.putString(BUNDLE_PASSWORD,mLoginPassword.getText().toString());
-        outState.putString(BUNDLE_M_SIGNED_UP_USER_NAME,mSignedUpUserName);
-        outState.putString(BUNDLE_M_SIGNED_UP_PASS_WORD,mSignedUpPassWord);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -153,13 +145,19 @@ public class LoginActivity extends AppCompatActivity {
             return;
 
         if (requestCode == SIGNUP_REQUEST_CODE) {
-
             mSignedUpUserName = data.getStringExtra(SignupActivity.SINGED_UP_USERNAME);
             mSignedUpPassWord = data.getStringExtra(SignupActivity.SIGNED_UP_PASSWORD);
             mLoginUsername.setText(mSignedUpUserName);
             mLoginPassword.setText(mSignedUpPassWord);
-
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(BUNDLE_USER_NAME,mLoginUsername.getText().toString().trim());
+        outState.putString(BUNDLE_PASSWORD,mLoginPassword.getText().toString().trim());
+        outState.putString(BUNDLE_M_SIGNED_UP_USER_NAME,mSignedUpUserName);
+        outState.putString(BUNDLE_M_SIGNED_UP_PASS_WORD,mSignedUpPassWord);
+    }
 }
